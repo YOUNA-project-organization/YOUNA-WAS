@@ -13,7 +13,9 @@ export const env: ENV_TYPE = (process.env.NODE_ENV && (process.env.NODE_ENV).tri
 const PORT = 5000
 const app: express.Application = express()
 
-
+// Cross-Origin Resource Sharing, CORS
+// 추가 HTTP 헤더를 사용하여, 한 출처에서 실행 중인 웹 어플리케이션이 다른 출처의 선택한 자원에
+// 접근할 수 있는 권한을 부여하도록 브라우저에 알려주는 체제
 app.use(cors())
 
 
