@@ -3,15 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.writeErrorLogs = void 0;
+exports.writeErrorLogs = exports.decodeToken = exports.generateJwtToken = void 0;
 const fs_1 = __importDefault(require("fs"));
 const constants_1 = require("../constants/constants");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const errorLoggerDev = fs_1.default.createWriteStream("error_development.log", {
     flags: "a",
 });
 const errorLoggerPrd = fs_1.default.createWriteStream("error_production.log", {
     flags: "a",
 });
+const secretKey = process.env.SECRET_KEY_JWT || "";
+exports.generateJwtToken = (id) => {
+    const token = jsonwebtoken_1.default.sign({
+        id,
+    }, secretKey);
+    return token;
+};
+exports.decodeToken = (token) => {
+    const decoded = jsonwebtoken_1.default.verify(token, secretKey);
+    const id = decoded.id;
+    return id;
+};
 exports.writeErrorLogs = (errorMessage) => {
     const date_ob = new Date();
     // current date

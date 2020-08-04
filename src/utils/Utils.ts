@@ -1,5 +1,9 @@
 import fs from "fs";
 import { env } from "../constants/constants";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const errorLoggerDev = fs.createWriteStream("error_development.log", {
   flags: "a",
@@ -8,6 +12,26 @@ const errorLoggerDev = fs.createWriteStream("error_development.log", {
 const errorLoggerPrd = fs.createWriteStream("error_production.log", {
   flags: "a",
 });
+
+const secretKey = process.env.SECRET_KEY_JWT || "";
+
+export const generateJwtToken = (id: string): string => {
+  const token = jwt.sign(
+    {
+      id,
+    },
+    secretKey
+  );
+  return token;
+};
+
+export const decodeToken = (token: string): string => {
+  const decoded = jwt.verify(token, secretKey) as {
+    id: string;
+  };
+  const id = decoded.id;
+  return id;
+};
 
 export const writeErrorLogs = (errorMessage: string) => {
   const date_ob = new Date();

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import UserModel from "../models/UserModel";
-import { writeErrorLogs } from "../utils/Utils";
+import { writeErrorLogs, generateJwtToken } from "../utils/Utils";
 
 export const makeNewUserAccount = async (req: Request, res: Response) => {
   const { name, password } = req.body;
@@ -32,11 +32,12 @@ export const makeNewUserAccount = async (req: Request, res: Response) => {
         password,
       });
       await newUser.save();
+      const jwtToken = generateJwtToken(newUser.id);
       return res.status(200).json({
         ok: true,
         status: 200,
         error: null,
-        token: "준비중",
+        token: jwtToken,
       });
     }
   } catch (err) {

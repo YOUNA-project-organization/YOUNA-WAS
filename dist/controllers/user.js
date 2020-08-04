@@ -43,11 +43,12 @@ exports.makeNewUserAccount = (req, res) => __awaiter(void 0, void 0, void 0, fun
                 password,
             });
             yield newUser.save();
+            const jwtToken = Utils_1.generateJwtToken(newUser.id);
             return res.status(200).json({
                 ok: true,
                 status: 200,
                 error: null,
-                token: "준비중",
+                token: jwtToken,
             });
         }
     }
