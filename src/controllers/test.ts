@@ -1,6 +1,5 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import axios from "axios";
-import cheerio from "cheerio";
 
 export const testController = async (req: Request, res: Response) => {
   const encodedUri = encodeURI(

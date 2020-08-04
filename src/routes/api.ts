@@ -1,9 +1,10 @@
-import express from 'express'
-import test from './test'
+import express from "express";
+import test from "./test";
+import user from "./user";
 
+const router = express.Router();
 
-const router = express.Router()
+router.use("/test", test);
+router.use("/user", user);
 
-router.use('/test', test)
-
-export default router
+export default router;

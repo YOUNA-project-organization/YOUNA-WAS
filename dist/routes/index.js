@@ -6,5 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const api_1 = __importDefault(require("./api"));
 const router = express_1.default.Router();
-router.use('/api', api_1.default);
+// 기본적으로 api의 endpoint는 /api 로 시작함
+router.use("/api", api_1.default);
 exports.default = router;
